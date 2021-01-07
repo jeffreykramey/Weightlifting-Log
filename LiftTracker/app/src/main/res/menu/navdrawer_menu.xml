@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/workoutsFragment"
+        android:title="Saved Workouts" />
+    <item
+        android:id="@+id/recordsFragment"
+        android:title="Records" />
+    <item
+        android:id="@+id/inventoryFragment"
+        android:title="Inventory" />
+    <item
+        android:id="@+id/settingsFragment"
+        android:title="Settings" />
+</menu>

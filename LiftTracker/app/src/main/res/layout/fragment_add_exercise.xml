@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.lifttracker.BuilderFragment">
+
+    <data>
+
+        <variable
+            name="adderViewModel"
+            type="com.example.lifttracker.addExercise.AdderViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <EditText
+            android:id="@+id/exerciseTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:hint="Exercise Title"
+            android:inputType="textPersonName"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/equipmentLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Required Equipment"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/exerciseTitle" />
+
+        <RadioGroup
+            android:id="@+id/equipmentRadioGroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/equipmentRadioGroup2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/equipmentLabel">
+
+            <RadioButton
+                android:id="@+id/barbellRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Barbell"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="160dp" />
+
+            <RadioButton
+                android:id="@+id/dumbbellRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dumbbell"
+                tools:layout_editor_absoluteX="17dp"
+                tools:layout_editor_absoluteY="209dp" />
+
+            <RadioButton
+                android:id="@+id/ezbarRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EZ-Bar"
+                tools:layout_editor_absoluteX="25dp"
+                tools:layout_editor_absoluteY="258dp" />
+
+            <RadioButton
+                android:id="@+id/bandRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Band"
+                tools:layout_editor_absoluteX="25dp"
+                tools:layout_editor_absoluteY="258dp" />
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/equipmentRadioGroup2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/equipmentRadioGroup1">
+
+            <RadioButton
+                android:id="@+id/kettlebellRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kettlebell"
+                tools:layout_editor_absoluteX="25dp"
+                tools:layout_editor_absoluteY="258dp" />
+
+            <RadioButton
+                android:id="@+id/weightPlateRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weight Plate"
+                tools:layout_editor_absoluteX="25dp"
+                tools:layout_editor_absoluteY="258dp" />
+
+            <RadioButton
+                android:id="@+id/otherRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Other"
+                tools:layout_editor_absoluteX="25dp"
+                tools:layout_editor_absoluteY="258dp" />
+
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/metricLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Metric Type"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/equipmentRadioGroup1" />
+
+        <RadioGroup
+            android:id="@+id/metricRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/metricLabel">
+
+            <RadioButton
+                android:id="@+id/rwRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reps and weight" />
+
+            <RadioButton
+                android:id="@+id/repsRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reps" />
+
+            <RadioButton
+                android:id="@+id/timeRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="#4CAF50"
+            android:text="Save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cancelButton" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#AF5D5D"
+            android:text="Cancel"
+            app:layout_constraintEnd_toStartOf="@+id/saveButton"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/saveButton" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
