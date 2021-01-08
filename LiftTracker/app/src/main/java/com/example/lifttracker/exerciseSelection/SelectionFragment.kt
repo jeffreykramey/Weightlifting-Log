@@ -18,6 +18,7 @@ import com.example.lifttracker.databinding.FragmentSelectionBinding
 
 
 class SelectionFragment : Fragment() {
+    var list = ArrayList<String>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -33,7 +34,7 @@ class SelectionFragment : Fragment() {
         binding.selectionViewModel = selectionViewModel
 
         val adapter = SelectExerciseAdapter(SelectExerciseListener {
-            exerciseTitle -> Toast.makeText(context, "${exerciseTitle}", Toast.LENGTH_LONG).show()
+            exerciseTitle -> Toast.makeText(context, "${exerciseTitle}", Toast.LENGTH_SHORT).show()
         })
         binding.exerciseList.adapter = adapter
         selectionViewModel.allExercises.observe(viewLifecycleOwner, Observer {
@@ -41,6 +42,7 @@ class SelectionFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
+
 
         binding.lifecycleOwner = this
 
@@ -53,7 +55,8 @@ class SelectionFragment : Fragment() {
         }
 
         binding.addSelectedButton.setOnClickListener{view : View ->
-            
+            list = adapter.mutableList
+            view.findNavController().navigate(SelectionFragmentDirections.actionSelectionFragmentToBuilderFragment())
         }
 
 //        FILTERING ATTEMPT

@@ -96,16 +96,5 @@ class AddExerciseFragment : Fragment() {
 
         return binding.root
     }
-
-
-
-
-//    private fun getRadioButtonText(
-//        radioButtonId: Int,
-//        binding: FragmentAddExerciseBinding
-//    ): String {
-//        val rb: RadioButton = binding.root.findViewById(radioButtonId)
-//        return rb.text.toString()
-//    }
 }
 

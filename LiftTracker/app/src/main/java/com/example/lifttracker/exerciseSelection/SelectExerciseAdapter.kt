@@ -1,6 +1,8 @@
 package com.example.lifttracker.exerciseSelection
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
@@ -12,7 +14,7 @@ import com.example.lifttracker.exerciseDatabase.NewExercise
 
 
 class SelectExerciseAdapter (val clickListener: SelectExerciseListener): androidx.recyclerview.widget.ListAdapter <NewExercise, SelectExerciseAdapter.ViewHolder>(NewExerciseDiffCallback()) {
-
+    var mutableList = ArrayList <String>()
 //    var data = listOf<NewExercise>()
 //        //setter tells recyclerView of any changes
 //        set(value) {
@@ -27,7 +29,26 @@ class SelectExerciseAdapter (val clickListener: SelectExerciseListener): android
 //        //make conditions here -> if reps & weight, do something
 //        val res = holder.itemView.context.resources
         holder.bind(getItem(position)!!, clickListener)
+        holder.binding.checkBox.setOnClickListener { view: View ->
+            if(holder.binding.checkBox.isChecked){
+                mutableList.add(holder.binding.exerciseTitle.text as String)
+            }
+            else{
+                mutableList.remove(holder.binding.exerciseTitle.text as String)
+            }
+            Log.e("tag", "$mutableList")
+        }
 
+//        holder.itemView.setOnClickListener {view : View ->
+//            holder.binding.checkBox.performClick()
+//            if(!holder.binding.checkBox.isChecked){
+//                mutableList.add(holder.binding.exerciseTitle.text as String)
+//            }
+//            else{
+//                mutableList.remove(holder.binding.exerciseTitle.text as String)
+//            }
+//            Log.e("tag", "$mutableList")
+//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,7 +61,7 @@ class SelectExerciseAdapter (val clickListener: SelectExerciseListener): android
             binding.exercise = item
             binding.clickListener = clickListener
             binding.executePendingBindings()
-             }
+        }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
@@ -49,9 +70,7 @@ class SelectExerciseAdapter (val clickListener: SelectExerciseListener): android
                 return ViewHolder(binding)
             }
         }
-
     }
-
 }
 
 class NewExerciseDiffCallback: DiffUtil.ItemCallback<NewExercise>() {
