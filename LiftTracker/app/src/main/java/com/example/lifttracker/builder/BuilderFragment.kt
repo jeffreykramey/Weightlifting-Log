@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.lifttracker.exerciseDatabase.ExerciseDatabase
@@ -14,6 +15,8 @@ import com.example.lifttracker.R
 import com.example.lifttracker.currentWorkout.CurrentWorkoutDatabase
 import com.example.lifttracker.databinding.FragmentBuilderBinding
 import com.example.lifttracker.exerciseDatabase.NewExercise
+import com.example.lifttracker.exerciseSelection.SelectionFragment
+import com.example.lifttracker.exerciseSelection.SelectionViewModel
 
 class BuilderFragment : Fragment() {
 
@@ -26,10 +29,22 @@ class BuilderFragment : Fragment() {
 
         //view model linking
         val application = requireNotNull(this.activity).application
-        val dataSource = CurrentWorkoutDatabase.getInstance(application).currentWorkoutDao
-        val viewModelFactory = BuilderViewModelFactory(dataSource, application)
-        val builderViewModel = ViewModelProvider(this, viewModelFactory).get(BuilderViewModel::class.java)
+//        val dataSource = CurrentWorkoutDatabase.getInstance(application).currentWorkoutDao
+//        val viewModelFactory = BuilderViewModelFactory(application)
+//        val builderViewModel = ViewModelProvider(this, viewModelFactory).get(BuilderViewModel::class.java)
+        val builderViewModel = BuilderViewModel(application)
         binding.builderViewModel = builderViewModel
+        val adapter = BuilderAdapter()
+        binding.workoutList.adapter = adapter
+
+
+        builderViewModel.exercises.observe(viewLifecycleOwner, Observer{
+            it?.let{
+                adapter.data = it
+            }
+        })
+
+
         binding.lifecycleOwner = this
 
 

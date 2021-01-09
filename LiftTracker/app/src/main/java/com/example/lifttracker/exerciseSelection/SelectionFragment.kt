@@ -15,10 +15,11 @@ import androidx.navigation.findNavController
 import com.example.lifttracker.exerciseDatabase.ExerciseDatabase
 import com.example.lifttracker.R
 import com.example.lifttracker.databinding.FragmentSelectionBinding
+import com.example.lifttracker.exerciseDatabase.NewExercise
 
 
 class SelectionFragment : Fragment() {
-    var list = ArrayList<String>()
+    var list = ArrayList<NewExercise?>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 

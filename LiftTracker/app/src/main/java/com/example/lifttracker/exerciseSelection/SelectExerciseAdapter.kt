@@ -14,7 +14,7 @@ import com.example.lifttracker.exerciseDatabase.NewExercise
 
 
 class SelectExerciseAdapter (val clickListener: SelectExerciseListener): androidx.recyclerview.widget.ListAdapter <NewExercise, SelectExerciseAdapter.ViewHolder>(NewExerciseDiffCallback()) {
-    var mutableList = ArrayList <String>()
+    var mutableList = ArrayList <NewExercise?>()
 //    var data = listOf<NewExercise>()
 //        //setter tells recyclerView of any changes
 //        set(value) {
@@ -31,10 +31,10 @@ class SelectExerciseAdapter (val clickListener: SelectExerciseListener): android
         holder.bind(getItem(position)!!, clickListener)
         holder.binding.checkBox.setOnClickListener { view: View ->
             if(holder.binding.checkBox.isChecked){
-                mutableList.add(holder.binding.exerciseTitle.text as String)
+                mutableList.add(holder.binding.exercise)
             }
             else{
-                mutableList.remove(holder.binding.exerciseTitle.text as String)
+                mutableList.remove(holder.binding.exercise)
             }
             Log.e("tag", "$mutableList")
         }
