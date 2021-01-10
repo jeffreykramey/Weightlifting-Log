@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.*
 
 
-@Database(entities = [CurrentWorkout::class], version = 1, exportSchema = false)
+@Database(entities = [CurrentWorkout::class], version = 2, exportSchema = false)
 @TypeConverters(CurrentWorkoutConverter::class) //reference to appropriate type converters
 abstract class CurrentWorkoutDatabase : RoomDatabase (){
     abstract val currentWorkoutDao : CurrentWorkoutDao

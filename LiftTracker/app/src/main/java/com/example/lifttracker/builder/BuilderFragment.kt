@@ -29,29 +29,29 @@ class BuilderFragment : Fragment() {
 
         //view model linking
         val application = requireNotNull(this.activity).application
-//        val dataSource = CurrentWorkoutDatabase.getInstance(application).currentWorkoutDao
-//        val viewModelFactory = BuilderViewModelFactory(application)
-//        val builderViewModel = ViewModelProvider(this, viewModelFactory).get(BuilderViewModel::class.java)
-        val builderViewModel = BuilderViewModel(application)
+        val dataSource = CurrentWorkoutDatabase.getInstance(application).currentWorkoutDao
+        val viewModelFactory = BuilderViewModelFactory(dataSource, application)
+        val builderViewModel = ViewModelProvider(this, viewModelFactory).get(BuilderViewModel::class.java)
         binding.builderViewModel = builderViewModel
+
         val adapter = BuilderAdapter()
         binding.workoutList.adapter = adapter
 
+        binding.lifecycleOwner = this
 
-        builderViewModel.exercises.observe(viewLifecycleOwner, Observer{
-            it?.let{
+       builderViewModel.workoutSummary.observe(viewLifecycleOwner, Observer {
+            it?.let {
                 adapter.data = it
             }
         })
-
-
-        binding.lifecycleOwner = this
-
 
         binding.addExerciseFAB.setOnClickListener { view: View ->
             view.findNavController().navigate(BuilderFragmentDirections.actionBuilderFragmentToSelectionFragment())
         }
 
+        binding.resetButton.setOnClickListener{view: View ->
+            builderViewModel.onClear()
+        }
 
         return binding.root
     }

@@ -54,7 +54,6 @@ class AdderViewModel (val database: NewExerciseDao, application: Application) : 
 
     fun onSaveExercise(){
         uiScope.launch {
-
             val thisExercise = NewExercise(exerciseTitle = exerciseTitle.value.toString(), equipment =  equipment.value.toString(), metric =  metric.value.toString())
             insert(thisExercise)
         }

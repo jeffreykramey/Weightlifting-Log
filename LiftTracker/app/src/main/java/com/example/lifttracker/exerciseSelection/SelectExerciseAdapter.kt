@@ -1,54 +1,31 @@
 package com.example.lifttracker.exerciseSelection
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.SearchView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lifttracker.currentWorkout.CurrentWorkout
 import com.example.lifttracker.databinding.ListItemExerciseBinding
 import com.example.lifttracker.exerciseDatabase.NewExercise
 
 
 class SelectExerciseAdapter (val clickListener: SelectExerciseListener): androidx.recyclerview.widget.ListAdapter <NewExercise, SelectExerciseAdapter.ViewHolder>(NewExerciseDiffCallback()) {
-    var mutableList = ArrayList <NewExercise?>()
-//    var data = listOf<NewExercise>()
-//        //setter tells recyclerView of any changes
-//        set(value) {
-//            field = value
-//            notifyDataSetChanged()
-//        }
-//
-//    override fun getItemCount() = data.size
+    var workoutComposition = mutableListOf <CurrentWorkout>()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val item = getItem(position!!, clickListener)
-//        //make conditions here -> if reps & weight, do something
-//        val res = holder.itemView.context.resources
+
         holder.bind(getItem(position)!!, clickListener)
+
         holder.binding.checkBox.setOnClickListener { view: View ->
+            var temp = CurrentWorkout(exercise = holder.binding.exercise!!)
             if(holder.binding.checkBox.isChecked){
-                mutableList.add(holder.binding.exercise)
+                workoutComposition.add(temp)
             }
             else{
-                mutableList.remove(holder.binding.exercise)
+                workoutComposition.remove(temp)
             }
-            Log.e("tag", "$mutableList")
         }
-
-//        holder.itemView.setOnClickListener {view : View ->
-//            holder.binding.checkBox.performClick()
-//            if(!holder.binding.checkBox.isChecked){
-//                mutableList.add(holder.binding.exerciseTitle.text as String)
-//            }
-//            else{
-//                mutableList.remove(holder.binding.exerciseTitle.text as String)
-//            }
-//            Log.e("tag", "$mutableList")
-//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

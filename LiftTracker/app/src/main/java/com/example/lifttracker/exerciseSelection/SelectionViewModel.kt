@@ -1,16 +1,18 @@
 package com.example.lifttracker.exerciseSelection
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import com.example.lifttracker.currentWorkout.CurrentWorkout
+import com.example.lifttracker.currentWorkout.CurrentWorkoutDao
 import com.example.lifttracker.exerciseDatabase.NewExercise
 import com.example.lifttracker.exerciseDatabase.NewExerciseDao
 import kotlinx.coroutines.*
 
-class SelectionViewModel (val database: NewExerciseDao, application: Application) : AndroidViewModel(application){
+class SelectionViewModel (val newExerciseDatabase: NewExerciseDao, val currentWorkoutDatabase: CurrentWorkoutDao, application: Application) : AndroidViewModel(application){
 
-    val allExercises = database.getAllExercises()
+    val allExercises = newExerciseDatabase.getAllExercises()
 
 
     private var viewModelJob = Job()
@@ -22,6 +24,17 @@ class SelectionViewModel (val database: NewExerciseDao, application: Application
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    fun onAddSelected(arrayList: MutableList<CurrentWorkout>){
+        uiScope.launch {
+            addSelected(arrayList)
+        }
+    }
+
+    private suspend fun addSelected(list: MutableList<CurrentWorkout>){
+        withContext(Dispatchers.IO){
+            currentWorkoutDatabase.insertAll(list)
+        }
+    }
 
     fun onClear(){
         uiScope.launch {
@@ -31,7 +44,7 @@ class SelectionViewModel (val database: NewExerciseDao, application: Application
 
     private suspend fun clear(){
         withContext(Dispatchers.IO){
-            database.clear()
+            newExerciseDatabase.clear()
         }
     }
 
@@ -43,7 +56,7 @@ class SelectionViewModel (val database: NewExerciseDao, application: Application
 
     private suspend fun filter(newText: String?){
         withContext(Dispatchers.IO){
-            database.filter(newText)
+            newExerciseDatabase.filter(newText)
         }
     }
 
