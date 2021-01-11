@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -34,14 +35,18 @@ class BuilderFragment : Fragment() {
         val builderViewModel = ViewModelProvider(this, viewModelFactory).get(BuilderViewModel::class.java)
         binding.builderViewModel = builderViewModel
 
-        val adapter = BuilderAdapter()
+        val adapter = BuilderAdapter(BuilderListener {
+            exercise ->  builderViewModel.onDelete(exercise)
+//            exerciseId ->  Toast.makeText(context, "$exerciseId", Toast.LENGTH_SHORT).show()
+        })
+
         binding.workoutList.adapter = adapter
 
         binding.lifecycleOwner = this
 
        builderViewModel.workoutSummary.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.data = it
+                adapter.submitList(it)
             }
         })
 
@@ -52,6 +57,8 @@ class BuilderFragment : Fragment() {
         binding.resetButton.setOnClickListener{view: View ->
             builderViewModel.onClear()
         }
+
+
 
         return binding.root
     }

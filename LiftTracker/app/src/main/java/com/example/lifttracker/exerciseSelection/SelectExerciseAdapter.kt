@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifttracker.currentWorkout.CurrentWorkout
 import com.example.lifttracker.databinding.ListItemExerciseBinding
 import com.example.lifttracker.exerciseDatabase.NewExercise
 
 
-class SelectExerciseAdapter (val clickListener: SelectExerciseListener): androidx.recyclerview.widget.ListAdapter <NewExercise, SelectExerciseAdapter.ViewHolder>(NewExerciseDiffCallback()) {
+class SelectExerciseAdapter (val clickListener: SelectExerciseListener): ListAdapter<NewExercise, SelectExerciseAdapter.ViewHolder>(NewExerciseDiffCallback()) {
     var workoutComposition = mutableListOf <CurrentWorkout>()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

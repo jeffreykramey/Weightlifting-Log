@@ -2,6 +2,7 @@ package com.example.lifttracker.currentWorkout
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
@@ -13,6 +14,9 @@ interface CurrentWorkoutDao {
 
     @Insert
     fun insertAll(list: List<CurrentWorkout>)
+
+    @Delete
+    fun delete(currentWorkout: CurrentWorkout)
 
     @Query("DELETE FROM current_workout_table")
     fun clear()

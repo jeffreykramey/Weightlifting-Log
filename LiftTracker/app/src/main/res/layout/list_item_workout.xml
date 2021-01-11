@@ -6,7 +6,11 @@
     <data>
         <variable
             name="exercise"
-            type="com.example.lifttracker.exerciseDatabase.NewExercise" />
+            type="com.example.lifttracker.currentWorkout.CurrentWorkout" />
+
+        <variable
+            name="clickListener"
+            type="com.example.lifttracker.builder.BuilderListener" />
 
     </data>
 
@@ -23,8 +27,7 @@
             android:text="Bench Press"
             app:layout_constraintEnd_toStartOf="@+id/deleteExerciseButton"
             app:layout_constraintStart_toStartOf="@+id/exercise_metric"
-            app:layout_constraintTop_toTopOf="parent"
-            app:setExerciseTitle="@{exercise}" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/exercise_metric"
@@ -36,8 +39,7 @@
             android:text="Metric"
             app:layout_constraintEnd_toStartOf="@+id/deleteExerciseButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/exercise_title"
-            app:setExerciseMetric="@{exercise}" />
+            app:layout_constraintTop_toBottomOf="@+id/exercise_title" />
 
         <TextView
             android:id="@+id/one_rep_max"
@@ -55,13 +57,15 @@
 
         <Button
             android:id="@+id/deleteExerciseButton"
-            android:layout_width="60dp"
-            android:layout_height="29dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="Delete"
             android:textSize="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{() -> clickListener.onClick(exercise)}"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

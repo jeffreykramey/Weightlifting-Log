@@ -24,6 +24,17 @@ class BuilderViewModel (val database: CurrentWorkoutDao, application: Applicatio
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    fun onDelete(currentWorkout: CurrentWorkout){
+        uiScope.launch {
+            delete(currentWorkout)
+        }
+    }
+
+    private suspend fun delete(currentWorkout: CurrentWorkout){
+        withContext(Dispatchers.IO){
+            database.delete(currentWorkout)
+        }
+    }
 
     fun onClear(){
         uiScope.launch {
