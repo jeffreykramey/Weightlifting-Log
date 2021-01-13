@@ -1,6 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".lifting.LiftingFragment"/>
+    tools:context="com.example.android.lifttracker.builder.BuilderFragment">
+
+    <data>
+        <variable
+            name="liftingViewModel"
+            type="com.example.lifttracker.lifting.LiftingViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/exerciseTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Exercise Title"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/logButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/workingRepSetLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fillViewport="true"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/repText"
+            tools:layout_editor_absoluteX="16dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/setNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="x"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/repCount"
+            app:layout_constraintEnd_toEndOf="@+id/setText"
+            app:layout_constraintStart_toStartOf="@+id/setText"
+            app:layout_constraintTop_toTopOf="@+id/repCount" />
+
+        <EditText
+            android:id="@+id/repCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:inputType="number"
+            android:text="8"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/repText"
+            app:layout_constraintHorizontal_bias="0.83"
+            app:layout_constraintStart_toStartOf="@+id/repText"
+            app:layout_constraintTop_toBottomOf="@+id/workingRepSetLog" />
+
+        <EditText
+            android:id="@+id/weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="315"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/repCount"
+            app:layout_constraintEnd_toEndOf="@+id/weightText"
+            app:layout_constraintStart_toStartOf="@+id/weightText"
+            app:layout_constraintTop_toTopOf="@+id/repCount" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="x"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/repCount"
+            app:layout_constraintEnd_toStartOf="@+id/weight"
+            app:layout_constraintStart_toEndOf="@+id/repCount"
+            app:layout_constraintTop_toTopOf="@+id/repCount" />
+
+        <TextView
+            android:id="@+id/lbsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="lbs"
+            app:layout_constraintBottom_toBottomOf="@+id/weight"
+            app:layout_constraintStart_toEndOf="@+id/weight"
+            app:layout_constraintTop_toTopOf="@+id/weight" />
+
+        <Button
+            android:id="@+id/saveLog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Log Set"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nextExButton"
+            app:layout_constraintStart_toEndOf="@+id/prevExButton" />
+
+        <TextView
+            android:id="@+id/setText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="8dp"
+            android:text="Set"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/exerciseTitle" />
+
+        <TextView
+            android:id="@+id/repText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="8dp"
+            android:text="Reps"
+            app:layout_constraintStart_toEndOf="@+id/setText"
+            app:layout_constraintTop_toBottomOf="@+id/exerciseTitle" />
+
+        <TextView
+            android:id="@+id/weightText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Weight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/repText"
+            app:layout_constraintTop_toBottomOf="@+id/exerciseTitle" />
+
+        <Button
+            android:id="@+id/prevExButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Previous"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/nextExButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageButton
+            android:id="@+id/addSetButton"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@android:drawable/ic_menu_mylocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lbsText"
+            app:layout_constraintTop_toBottomOf="@+id/weight" />
+
+        <ImageButton
+            android:id="@+id/removeSetButton"
+            android:layout_width="18dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="8dp"
+            android:src="@android:drawable/btn_dialog"
+            app:layout_constraintEnd_toStartOf="@+id/addSetButton"
+            app:layout_constraintHorizontal_bias="0.046"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/setNumber" />
+
+        <Button
+            android:id="@+id/logButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/clearButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            app:layout_constraintBottom_toTopOf="@+id/nextExButton"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

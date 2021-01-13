@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/builderFragment"
         android:name="com.example.lifttracker.builder.BuilderFragment"
-        android:label="Select Exercise"
+        android:label="Build Your Workout"
         tools:layout="@layout/fragment_builder" >
         <action
             android:id="@+id/action_builderFragment_to_lifting_Fragment"
@@ -54,7 +54,7 @@
     <fragment
         android:id="@+id/selectionFragment"
         android:name="com.example.lifttracker.exerciseSelection.SelectionFragment"
-        android:label="SelectionFragment" >
+        android:label="Select your exercises" >
         <action
             android:id="@+id/action_selectionFragment_to_addExerciseFragment"
             app:destination="@id/addExerciseFragment" />

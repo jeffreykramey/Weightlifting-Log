@@ -3,6 +3,8 @@ package com.example.lifttracker.exerciseDatabase
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.lifttracker.logDatabase.Logs
+import java.util.*
 
 
 @Entity(tableName = "exercise_table")
@@ -18,4 +20,4 @@ data class NewExercise (
 
     @ColumnInfo(name = "metric")
     var metric : String = ""
-        )
+)

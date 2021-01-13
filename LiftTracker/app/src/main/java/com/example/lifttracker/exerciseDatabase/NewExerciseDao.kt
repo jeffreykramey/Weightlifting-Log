@@ -2,6 +2,7 @@ package com.example.lifttracker.exerciseDatabase
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.lifttracker.logDatabase.Logs
 
 @Dao
 interface NewExerciseDao {
@@ -23,4 +24,5 @@ interface NewExerciseDao {
 
     @Query("SELECT * FROM exercise_table WHERE exerciseTitle = :exerciseTitle ORDER BY exerciseTitle ASC")
     fun filter(exerciseTitle: String?): LiveData<List<NewExercise>>
+
 }

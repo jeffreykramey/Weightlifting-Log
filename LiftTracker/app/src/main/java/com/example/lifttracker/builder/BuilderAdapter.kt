@@ -57,5 +57,6 @@ class BuilderDiffCallBack : DiffUtil.ItemCallback<CurrentWorkout>() {
 
 class BuilderListener(val clickListener: (currentWorkout: CurrentWorkout) -> Unit){
 //    fun onClick() = clickListener("test")
-    fun onClick(exercise: CurrentWorkout) = clickListener(exercise)
+    fun deleteItem(exercise: CurrentWorkout) = clickListener(exercise)
+//    fun getID(exercise: CurrentWorkout) = clickListener(exercise)
 }

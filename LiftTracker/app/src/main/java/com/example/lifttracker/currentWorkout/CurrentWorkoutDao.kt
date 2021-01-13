@@ -23,4 +23,6 @@ interface CurrentWorkoutDao {
 
     @Query("Select * FROM current_workout_table ORDER BY exerciseID ASC")
     fun getWorkout(): LiveData<List<CurrentWorkout>>
+
+
 }

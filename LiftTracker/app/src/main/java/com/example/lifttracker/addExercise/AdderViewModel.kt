@@ -35,22 +35,11 @@ class AdderViewModel (val database: NewExerciseDao, application: Application) : 
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private var thisExercise1 = MutableLiveData<NewExercise>()
-
-
     init {
         exerciseTitle.value = "empty"
         equipment.value = "empty"
         metric.value = "empty"
-//        initExercise()
     }
-
-//    private fun initExercise(){
-//        uiScope.launch {
-//         thisExercise1.value = NewExercise(exerciseTitle.value.toString(), equipment.value.toString(), metric.value.toString())
-//        }
-//    }
-
 
     fun onSaveExercise(){
         uiScope.launch {

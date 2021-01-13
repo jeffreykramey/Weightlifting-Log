@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.lifttracker.currentWorkout.CurrentWorkoutConverter
 import com.example.lifttracker.currentWorkout.CurrentWorkoutDao
 
-@Database (entities = [NewExercise::class], version = 2, exportSchema = false)
+@Database (entities = [NewExercise::class], version = 4, exportSchema = false)
+@TypeConverters(NewExerciseConverter::class)
 abstract class ExerciseDatabase : RoomDatabase() {
 
     abstract val exerciseDatabaseDao : NewExerciseDao
@@ -26,8 +29,6 @@ abstract class ExerciseDatabase : RoomDatabase() {
                 }
                 INSTANCE = instance
                 return instance
-
-
             }
         }
     }

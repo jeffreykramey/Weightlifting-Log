@@ -24,11 +24,9 @@ class BuilderFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        // Inflate the layout for this fragment
         val binding = DataBindingUtil.inflate<FragmentBuilderBinding>(
             inflater, R.layout.fragment_builder, container, false)
 
-        //view model linking
         val application = requireNotNull(this.activity).application
         val dataSource = CurrentWorkoutDatabase.getInstance(application).currentWorkoutDao
         val viewModelFactory = BuilderViewModelFactory(dataSource, application)
@@ -37,9 +35,8 @@ class BuilderFragment : Fragment() {
 
         val adapter = BuilderAdapter(BuilderListener {
             exercise ->  builderViewModel.onDelete(exercise)
-//            exerciseId ->  Toast.makeText(context, "$exerciseId", Toast.LENGTH_SHORT).show()
+//            exerciseID ->  Toast.makeText(context, "$exerciseID", Toast.LENGTH_SHORT).show()
         })
-
         binding.workoutList.adapter = adapter
 
         binding.lifecycleOwner = this
@@ -49,6 +46,10 @@ class BuilderFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
+
+        binding.startButton.setOnClickListener{view: View ->
+            view.findNavController().navigate(BuilderFragmentDirections.actionBuilderFragmentToLiftingFragment())
+        }
 
         binding.addExerciseFAB.setOnClickListener { view: View ->
             view.findNavController().navigate(BuilderFragmentDirections.actionBuilderFragmentToSelectionFragment())

@@ -12,13 +12,4 @@ data class CurrentWorkout (
 
     @ColumnInfo
     var exercise: NewExercise = NewExercise()
-
-//    @ColumnInfo
-//    var exerciseTitle: String = "",
-//
-//    @ColumnInfo(name = "equipment")
-//    var equipment : String = "",
-//
-//    @ColumnInfo(name = "metric")
-//    var metric : String = ""
 )
