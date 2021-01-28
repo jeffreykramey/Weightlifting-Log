@@ -1,9 +1,7 @@
 package com.example.lifttracker.lifting
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import com.example.lifttracker.currentWorkout.CurrentWorkout
+import androidx.lifecycle.*
 import com.example.lifttracker.currentWorkout.CurrentWorkoutDao
 import com.example.lifttracker.logDatabase.Logs
 import com.example.lifttracker.logDatabase.LogsDao
@@ -11,20 +9,27 @@ import kotlinx.coroutines.*
 
 class LiftingViewModel (val logDatabase: LogsDao, val workoutDatabase: CurrentWorkoutDao, application: Application) : AndroidViewModel(application){
 
-    var allLogs = logDatabase.getAllLogs()
+    var logList = logDatabase.getAllLogs()
     var thisWorkout = workoutDatabase.getWorkout()
-//    var currentExercise: CurrentWorkout
+
+    var tempID = 0
+    var currentLogs = logDatabase.getLogsByID(1)
+    val tempLogs = Transformations.switchMap(logList) {
+        logDatabase.getLogsByID(thisWorkout.value?.get(tempID)?.exercise?.exerciseID)
+    }
+
+
     var currentIndex: Int
 
     var setNumber = 1
     var repCount = MutableLiveData<Int>()
     var weight = MutableLiveData<Int>()
-    var exerciseID : Long = 0
+
 
     init {
         repCount.value = 8
         weight.value = 315
-//        currentExercise = thisWorkout.value?.get(0)!!
+
         currentIndex = 0
         thisWorkout.value?.let { println(it.size) }
     }
@@ -39,7 +44,7 @@ class LiftingViewModel (val logDatabase: LogsDao, val workoutDatabase: CurrentWo
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    fun onLogSet(){
+    fun onLogSet(exerciseID: Long){
         uiScope.launch {
             val newLog = Logs(exerciseID = exerciseID, setNumber = setNumber, repCount = repCount.value!!, weight = weight.value!!)
             insertLog(newLog)
@@ -78,5 +83,18 @@ class LiftingViewModel (val logDatabase: LogsDao, val workoutDatabase: CurrentWo
             setNumber --
         }
     }
+
+    fun loadLogsByID(exerciseID: Long?) {
+        uiScope.launch {
+            getLogsByID(exerciseID)
+        }
+    }
+
+    private suspend fun getLogsByID(exerciseID: Long?) {
+        withContext(Dispatchers.IO){
+            logList = logDatabase.getLogsByID(exerciseID)
+        }
+    }
+
 
 }

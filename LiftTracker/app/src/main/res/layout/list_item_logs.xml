@@ -10,13 +10,14 @@
 
         <variable
             name="clickListener"
-            type="com.example.lifttracker.lifting.LiftingAdapter" />
+            type="com.example.lifttracker.lifting.LiftingListener" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(log)}">
 
         <TextView
             android:id="@+id/setNumber"

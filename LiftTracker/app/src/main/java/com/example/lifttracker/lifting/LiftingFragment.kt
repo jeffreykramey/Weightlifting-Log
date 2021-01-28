@@ -7,18 +7,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.lifttracker.R
+import com.example.lifttracker.currentWorkout.CurrentWorkout
 import com.example.lifttracker.currentWorkout.CurrentWorkoutDatabase
 import com.example.lifttracker.databinding.FragmentLiftingBinding
+import com.example.lifttracker.exerciseDatabase.NewExercise
+import com.example.lifttracker.exerciseSelection.SelectExerciseListener
 import com.example.lifttracker.logDatabase.LogDatabase
+import com.example.lifttracker.logDatabase.Logs
 import org.w3c.dom.Text
 
 class LiftingFragment : Fragment() {
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        var exerciseCount = 0
 
         val binding = DataBindingUtil.inflate<FragmentLiftingBinding>(
             inflater, R.layout.fragment_lifting, container, false)
@@ -29,17 +39,31 @@ class LiftingFragment : Fragment() {
         val viewModelFactory = LiftingViewModelFactory(dataSource1, dataSource2, application)
         val liftingViewModel = ViewModelProvider(this, viewModelFactory).get(LiftingViewModel::class.java)
         binding.liftingViewModel = liftingViewModel
+        var currentLift = liftingViewModel.thisWorkout.value?.get(exerciseCount)?.exercise
+        var currentLiftID = currentLift?.exerciseID
 
-        val adapter = LiftingAdapter()
-                binding.workingRepSetLog.adapter = adapter
+
+        val adapter = LiftingAdapter(LiftingListener {
+                id -> Toast.makeText(context, "${id}", Toast.LENGTH_SHORT).show()
+        })
+        binding.workingRepSetLog.adapter = adapter
 
         binding.lifecycleOwner = this
 
-        liftingViewModel.allLogs.observe(viewLifecycleOwner, Observer {
+        updateCurrentLogs(liftingViewModel, currentLift)
+
+        liftingViewModel.tempLogs.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }
-//            binding.exerciseTitle.text = liftingViewModel.currentExercise.exercise.exerciseTitle
+
+        })
+
+
+        liftingViewModel.thisWorkout.observe(viewLifecycleOwner, Observer {
+            binding.exerciseTitle.text =
+                liftingViewModel.thisWorkout.value?.get(exerciseCount)?.exercise?.exerciseTitle ?: "title not found"
+
         })
 
         binding.weight.addTextChangedListener(object: TextWatcher{
@@ -91,24 +115,63 @@ class LiftingFragment : Fragment() {
         })
 
         binding.saveLog.setOnClickListener{view: View ->
-            liftingViewModel.onLogSet()
-            binding.setNumber.text = (liftingViewModel.setNumber+ 1).toString()
+            var tempId = liftingViewModel.thisWorkout.value?.get(exerciseCount)?.exercise?.exerciseID
+            if (tempId != null) {
+                liftingViewModel.onLogSet(tempId)
+            }
+            binding.setNumber.text = (liftingViewModel.setNumber + 1).toString()
         }
 
         binding.clearButton.setOnClickListener{view : View ->
             liftingViewModel.onClear()
-            binding.setNumber.text = (liftingViewModel.setNumber+ 1).toString()
+            binding.setNumber.text = (liftingViewModel.setNumber + 1).toString()
         }
 
         binding.removeSetButton.setOnClickListener{view: View ->
             liftingViewModel.onRemoveLast()
+            binding.setNumber.text = (liftingViewModel.setNumber + 1).toString()
+        }
 
+        binding.nextExButton.setOnClickListener{view: View ->
+            if (exerciseCount < liftingViewModel.thisWorkout.value?.size!! - 1){
+                exerciseCount ++
+                currentLift = updateCurrentLift(liftingViewModel, exerciseCount)
+                liftingViewModel.tempID = exerciseCount
+                binding.exerciseTitle.text = currentLift?.exerciseTitle
+                adapter.notifyDataSetChanged()
+
+//                updateCurrentLogs(liftingViewModel, currentLift)
+            }
+
+//            binding.exerciseTitle.text =
+//                liftingViewModel.thisWorkout.value?.get(exerciseCount)?.exercise?.exerciseTitle ?: "title not found"
+
+//            liftingViewModel.loadLogsByID(currentLift?.exerciseID)
+        }
+
+        binding.prevExButton.setOnClickListener{view: View ->
+            if(exerciseCount > 0){
+                exerciseCount --
+            }
+            currentLift = updateCurrentLift(liftingViewModel, exerciseCount)
+            liftingViewModel.tempID = exerciseCount
+            binding.exerciseTitle.text = currentLift?.exerciseTitle
         }
 
         return binding.root
     }
 
+
 //handle onsavedinstance state (when navigate out of app OR phone kill app)
     //hold list of exerciseIDs
     //on next, change title,
 }
+
+private fun updateCurrentLogs(liftingViewModel: LiftingViewModel, newExercise: NewExercise?){
+    liftingViewModel.loadLogsByID(newExercise?.exerciseID)
+}
+
+private fun updateCurrentLift(liftingViewModel: LiftingViewModel, int: Int) : NewExercise?{
+    return liftingViewModel.thisWorkout.value?.get(int)?.exercise
+}
+
