@@ -26,6 +26,9 @@ interface LogsDao {
     @Query("SELECT * FROM logs_table ORDER BY logID DESC LIMIT 1")
     fun getLastLog() : Logs?
 
+    @Query("SELECT * FROM logs_table WHERE exerciseID = :exerciseID ORDER BY logID DESC LIMIT 1")
+    fun getLastExerciseLog(exerciseID: Long?) : Logs?
+
     @Query("SELECT * FROM logs_table WHERE exerciseID = :exerciseID ORDER BY logID ASC")
     fun getLogsByID(exerciseID: Long?) : LiveData<List<Logs>>
 

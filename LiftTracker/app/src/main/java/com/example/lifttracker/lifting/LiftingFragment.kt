@@ -9,18 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.lifttracker.R
-import com.example.lifttracker.currentWorkout.CurrentWorkout
 import com.example.lifttracker.currentWorkout.CurrentWorkoutDatabase
 import com.example.lifttracker.databinding.FragmentLiftingBinding
 import com.example.lifttracker.exerciseDatabase.NewExercise
-import com.example.lifttracker.exerciseSelection.SelectExerciseListener
 import com.example.lifttracker.logDatabase.LogDatabase
-import com.example.lifttracker.logDatabase.Logs
-import org.w3c.dom.Text
 
 class LiftingFragment : Fragment() {
 
@@ -138,15 +133,9 @@ class LiftingFragment : Fragment() {
                 currentLift = updateCurrentLift(liftingViewModel, exerciseCount)
                 liftingViewModel.tempID = exerciseCount
                 binding.exerciseTitle.text = currentLift?.exerciseTitle
-                adapter.notifyDataSetChanged()
-
-//                updateCurrentLogs(liftingViewModel, currentLift)
+                liftingViewModel.onSwitchExercise()
             }
 
-//            binding.exerciseTitle.text =
-//                liftingViewModel.thisWorkout.value?.get(exerciseCount)?.exercise?.exerciseTitle ?: "title not found"
-
-//            liftingViewModel.loadLogsByID(currentLift?.exerciseID)
         }
 
         binding.prevExButton.setOnClickListener{view: View ->
@@ -156,6 +145,7 @@ class LiftingFragment : Fragment() {
             currentLift = updateCurrentLift(liftingViewModel, exerciseCount)
             liftingViewModel.tempID = exerciseCount
             binding.exerciseTitle.text = currentLift?.exerciseTitle
+            liftingViewModel.onSwitchExercise()
         }
 
         return binding.root

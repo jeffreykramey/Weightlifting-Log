@@ -20,7 +20,6 @@ class LiftingViewModel (val logDatabase: LogsDao, val workoutDatabase: CurrentWo
 
 
     var currentIndex: Int
-
     var setNumber = 1
     var repCount = MutableLiveData<Int>()
     var weight = MutableLiveData<Int>()
@@ -43,6 +42,21 @@ class LiftingViewModel (val logDatabase: LogsDao, val workoutDatabase: CurrentWo
     }
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
+    fun onSwitchExercise(){
+        uiScope.launch {
+            updateExerciseView()
+        }
+    }
+
+    private suspend fun updateExerciseView(){
+        withContext(Dispatchers.IO){
+            var size = tempLogs.value!!.size
+//           setNumber = logDatabase.getLastExerciseLog( 1)?.setNumber!! //TODO: this returns the set number of the last log, NOT the last log of the desired exercise
+            onLogSet(0)
+            onRemoveLast()
+        }
+    }
 
     fun onLogSet(exerciseID: Long){
         uiScope.launch {
@@ -93,6 +107,12 @@ class LiftingViewModel (val logDatabase: LogsDao, val workoutDatabase: CurrentWo
     private suspend fun getLogsByID(exerciseID: Long?) {
         withContext(Dispatchers.IO){
             logList = logDatabase.getLogsByID(exerciseID)
+        }
+    }
+
+    private fun findLastSet(liveData: LiveData<List<Logs>>){
+        for(Logs in liveData.value!!){
+
         }
     }
 
